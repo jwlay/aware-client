@@ -180,6 +180,12 @@ public class ESM extends Aware_Sensor {
     public static final int TYPE_ESM_NUMBER = 9;
 
     /**
+     * ESM Dialog with drawing input
+     * Example: [{"esm":{"esm_type":10,"esm_title":"Drawing","esm_instructions":"Please draw an image","esm_submit":"OK","esm_trigger":"AWARE Test"}}]
+     */
+    public static final int TYPE_ESM_DRAW = 10;
+
+    /**
      * Required String extra for displaying an ESM. It should contain the JSON string that defines the ESM dialog.
      * Examples:<p>
      * Free text: [{'esm':{'esm_type':1,'esm_title':'ESM Freetext','esm_instructions':'The user can answer an open ended question.','esm_submit':'Next','esm_expiration_threshold':20,'esm_trigger':'esm trigger example'}}]
