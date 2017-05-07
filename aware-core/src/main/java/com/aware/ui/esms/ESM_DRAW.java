@@ -19,18 +19,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aware.Aware;
 import com.aware.ESM;
 import com.aware.R;
 import com.aware.providers.ESM_Provider;
-import com.aware.utils.BASE64_bitmap_converter;
+import com.aware.utils.ESM_ImageUtils;
 
 import org.json.JSONException;
-
-import static android.R.color.black;
 
 /**
  * Created by Jan Wohlfahrt-Laymann on 2017-04-30.
@@ -99,7 +96,7 @@ public class ESM_DRAW extends ESM_Question {
 
                         ContentValues rowData = new ContentValues();
                         rowData.put(ESM_Provider.ESM_Data.ANSWER_TIMESTAMP, System.currentTimeMillis());
-                        rowData.put(ESM_Provider.ESM_Data.ANSWER, BASE64_bitmap_converter.bitmapToString(feedback.getDrawing()));
+                        rowData.put(ESM_Provider.ESM_Data.ANSWER, ESM_ImageUtils.bitmapToString(feedback.getDrawing()));
                         rowData.put(ESM_Provider.ESM_Data.STATUS, ESM.STATUS_ANSWERED);
 
                         getActivity().getContentResolver().update(ESM_Provider.ESM_Data.CONTENT_URI, rowData, ESM_Provider.ESM_Data._ID + "=" + getID(), null);

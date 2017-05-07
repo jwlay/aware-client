@@ -12,25 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aware.Aware;
 import com.aware.ESM;
+import com.aware.R;
 import com.aware.providers.ESM_Provider;
 import com.aware.utils.ESM_ImageUtils;
 
 import org.json.JSONException;
 
+
 /**
  * Created by Jan Wohlfahrt-Laymann on 2017-05-07.
  */
 
-public class ESM_IMAGE_Freetext extends ESM_Question {
+public class ESM_Image_Draw extends ESM_Question {
 
-    public ESM_IMAGE_Freetext() throws JSONException {
-        this.setType(ESM.TYPE_ESM_IMAGE_FREETEXT);
+    public ESM_Image_Draw() throws JSONException {
+        this.setType(ESM.TYPE_ESM_IMAGE_DRAW);
     }
 
     @NonNull
@@ -41,20 +42,20 @@ public class ESM_IMAGE_Freetext extends ESM_Question {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View ui = inflater.inflate(com.aware.R.layout.esm_image_freetext, null);
+        View ui = inflater.inflate(R.layout.esm_image_draw, null);
         builder.setView(ui);
 
         esm_dialog = builder.create();
         esm_dialog.setCanceledOnTouchOutside(false);
 
         try {
-            TextView esm_title = (TextView) ui.findViewById(com.aware.R.id.esm_title);
+            TextView esm_title = (TextView) ui.findViewById(R.id.esm_title);
             esm_title.setText(getTitle());
 
             ImageView esm_instructions = (ImageView) ui.findViewById(com.aware.R.id.esm_instructions);
             esm_instructions.setImageBitmap(ESM_ImageUtils.getBitmapFromURL(getInstructions()));
 
-            final EditText feedback = (EditText) ui.findViewById(com.aware.R.id.esm_feedback);
+            final ESM_DRAW.CanvasView feedback = (ESM_DRAW.CanvasView) ui.findViewById(R.id.esm_draw);
             feedback.requestFocus();
             feedback.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,7 +70,7 @@ public class ESM_IMAGE_Freetext extends ESM_Question {
             });
             esm_dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-            Button cancel_text = (Button) ui.findViewById(com.aware.R.id.esm_cancel);
+            Button cancel_text = (Button) ui.findViewById(R.id.esm_cancel);
             cancel_text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,7 +78,7 @@ public class ESM_IMAGE_Freetext extends ESM_Question {
                 }
             });
 
-            Button submit_text = (Button) ui.findViewById(com.aware.R.id.esm_submit);
+            Button submit_text = (Button) ui.findViewById(R.id.esm_submit);
             submit_text.setText(getSubmitButton());
             submit_text.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,7 +89,7 @@ public class ESM_IMAGE_Freetext extends ESM_Question {
 
                         ContentValues rowData = new ContentValues();
                         rowData.put(ESM_Provider.ESM_Data.ANSWER_TIMESTAMP, System.currentTimeMillis());
-                        rowData.put(ESM_Provider.ESM_Data.ANSWER, feedback.getText().toString());
+                        rowData.put(ESM_Provider.ESM_Data.ANSWER, ESM_ImageUtils.bitmapToString(feedback.getDrawing()));
                         rowData.put(ESM_Provider.ESM_Data.STATUS, ESM.STATUS_ANSWERED);
 
                         getActivity().getContentResolver().update(ESM_Provider.ESM_Data.CONTENT_URI, rowData, ESM_Provider.ESM_Data._ID + "=" + getID(), null);

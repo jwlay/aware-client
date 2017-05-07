@@ -3,19 +3,23 @@ package com.aware.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by Jan Wohlfahrt-Laymann on 2017-04-30.
  */
 
 /*
-Base 64 Bitmap converter helper class
-can encode bitmap to base64 string
-and decode
+  Helper class to convert image to base64 string
+  and retrieve bitmaps from url
  */
-public class BASE64_bitmap_converter {
+public class ESM_ImageUtils {
 
     /*
     * Method to encode bitmap to base64 string
@@ -42,6 +46,31 @@ public class BASE64_bitmap_converter {
             return bitmap;
         } catch(Exception e) {
             e.getMessage();
+            return null;
+        }
+    }
+
+    /*
+    * Retrieve a bitmap from image from a url string
+    * @param src the url
+    * @return Bitmap
+     */
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            } else {
+                Log.e("ESM_IMAGE_Freetext","Error connection to url: "+connection.getResponseCode()+ " " + connection.getResponseMessage());
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
             return null;
         }
     }
