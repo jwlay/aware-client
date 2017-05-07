@@ -4,8 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:minWidth="300dip"
-    android:orientation="vertical"
-    android:visibility="visible">
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/esm_title"
@@ -17,27 +16,29 @@
         android:textStyle="normal|bold"
         android:textSize="18sp" />
 
-    <TextView
+    <ImageView
         android:id="@+id/esm_instructions"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
         android:padding="16dp"
         android:layout_weight="1" />
 
 
-    <view class="com.aware.ui.esms.ESM_DRAW$CanvasView"
-        android:id="@+id/esm_draw"
+    <EditText
+        android:id="@+id/esm_feedback"
         android:layout_width="fill_parent"
-        android:layout_height="120pt"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/esm_instructions"
         android:gravity="top|left"
-        android:layout_margin="10pt"
-        android:padding="20dp" >
+        android:inputType="textAutoComplete|textShortMessage"
+        android:lines="1"
+        android:padding="16dp">
 
         <requestFocus />
-    </view>
+    </EditText>
 
     <LinearLayout
         android:id="@+id/LinearLayout1"

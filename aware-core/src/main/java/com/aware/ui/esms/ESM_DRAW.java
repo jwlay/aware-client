@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,6 +29,8 @@ import com.aware.providers.ESM_Provider;
 import com.aware.utils.BASE64_bitmap_converter;
 
 import org.json.JSONException;
+
+import static android.R.color.black;
 
 /**
  * Created by Jan Wohlfahrt-Laymann on 2017-04-30.
@@ -48,7 +51,7 @@ public class ESM_DRAW extends ESM_Question {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View ui = inflater.inflate(R.layout.esm_text, null);
+        View ui = inflater.inflate(R.layout.esm_draw, null);
         builder.setView(ui);
 
         esm_dialog = builder.create();
@@ -62,9 +65,7 @@ public class ESM_DRAW extends ESM_Question {
             TextView esm_instructions = (TextView) ui.findViewById(R.id.esm_instructions);
             esm_instructions.setText(getInstructions());
 
-            final CanvasView feedback = (CanvasView) ui.findViewById(R.id.esm_feedback);
-            feedback.width = 200;
-            feedback.height = 200;
+            final CanvasView feedback = (CanvasView) ui.findViewById(R.id.esm_draw);
             feedback.requestFocus();
             feedback.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,54 +123,47 @@ public class ESM_DRAW extends ESM_Question {
         return esm_dialog;
     }
 
-    public class CanvasView extends RelativeLayout {
+    public static class CanvasView extends View {
+        public Bitmap  mBitmap;
+        public Canvas  mCanvas;
+        private Path    mPath;
+        private Paint   mBitmapPaint;
+        private Paint   mPaint;
 
-        public int width;
-        public int height;
-        private Bitmap mBitmap;
-        private Canvas mCanvas;
-        private Path mPath;
-        private Paint mBitmapPaint;
-        Context context;
-        private Paint circlePaint;
-        private Path circlePath;
-        private Paint mPaint;
 
-        public CanvasView(Context context, Paint paint) {
-            super(context);
-            this.context = context;
-            mPaint = paint;
+        public CanvasView(Context c, AttributeSet attrs) {
+            super(c, attrs);
+
             mPath = new Path();
             mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-            circlePaint = new Paint();
-            circlePath = new Path();
-            circlePaint.setAntiAlias(true);
-            circlePaint.setColor(Color.BLUE);
-            circlePaint.setStyle(Paint.Style.STROKE);
-            circlePaint.setStrokeJoin(Paint.Join.MITER);
-            circlePaint.setStrokeWidth(4f);
+
+            mPaint = new Paint();
+            mPaint.setAntiAlias(true);
+            mPaint.setDither(true);
+            mPaint.setColor(0xFF000000);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeJoin(Paint.Join.ROUND);
+            mPaint.setStrokeCap(Paint.Cap.ROUND);
+            mPaint.setStrokeWidth(9);
 
         }
 
-        public Bitmap getDrawing() {
-            return mBitmap;
-        }
 
         @Override
         protected void onSizeChanged(int w, int h, int oldw, int oldh) {
             super.onSizeChanged(w, h, oldw, oldh);
-
             mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             mCanvas = new Canvas(mBitmap);
+            mCanvas.drawRGB(255,255,255);
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
+            canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
 
-            canvas.drawBitmap( mBitmap, 0, 0, mBitmapPaint);
-            canvas.drawPath( mPath,  mPaint);
-            canvas.drawPath( circlePath,  circlePaint);
+            canvas.drawPath(mPath, mPaint);
+
+
         }
 
         private float mX, mY;
@@ -181,7 +175,6 @@ public class ESM_DRAW extends ESM_Question {
             mX = x;
             mY = y;
         }
-
         private void touch_move(float x, float y) {
             float dx = Math.abs(x - mX);
             float dy = Math.abs(y - mY);
@@ -189,17 +182,12 @@ public class ESM_DRAW extends ESM_Question {
                 mPath.quadTo(mX, mY, (x + mX)/2, (y + mY)/2);
                 mX = x;
                 mY = y;
-
-                circlePath.reset();
-                circlePath.addCircle(mX, mY, 30, Path.Direction.CW);
             }
         }
-
         private void touch_up() {
             mPath.lineTo(mX, mY);
-            circlePath.reset();
             // commit the path to our offscreen
-            mCanvas.drawPath(mPath,  mPaint);
+            mCanvas.drawPath(mPath, mPaint);
             // kill this so we don't double draw
             mPath.reset();
         }
@@ -225,5 +213,24 @@ public class ESM_DRAW extends ESM_Question {
             }
             return true;
         }
+
+        public Bitmap getDrawing()
+        {
+            this.setDrawingCacheEnabled(true);
+            this.buildDrawingCache();
+            Bitmap bmp = Bitmap.createBitmap(this.getDrawingCache());
+            this.setDrawingCacheEnabled(false);
+
+
+            return bmp;
+        }
+
+        public void clear(){
+            mBitmap.eraseColor(Color.GREEN);
+            invalidate();
+            System.gc();
+
+        }
+
     }
 }
