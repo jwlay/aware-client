@@ -73,7 +73,7 @@ public class ESM_Notice extends ESM_Question {
 
                         ContentValues rowData = new ContentValues();
                         rowData.put(ESM_Provider.ESM_Data.ANSWER_TIMESTAMP, System.currentTimeMillis());
-                        rowData.put(ESM_Provider.ESM_Data.ANSWER, (String) null);
+                        rowData.put(ESM_Provider.ESM_Data.ANSWER, "");
                         rowData.put(ESM_Provider.ESM_Data.STATUS, ESM.STATUS_ANSWERED);
 
                         getActivity().getContentResolver().update(ESM_Provider.ESM_Data.CONTENT_URI, rowData, ESM_Provider.ESM_Data._ID + "=" + getID(), null);
