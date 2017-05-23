@@ -68,6 +68,8 @@ public class ESMFactory {
                 return new ESM_IMAGE_Freetext().rebuild(esm).setID(_id);
             case ESM.TYPE_ESM_IMAGE_DRAW:
                 return new ESM_Image_Draw().rebuild(esm).setID(_id);
+            case ESM.TYPE_ESM_NOTICE:
+                return new ESM_Notice().rebuild(esm).setID(_id);
             default:
                 return null;
         }
