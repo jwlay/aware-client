@@ -16,8 +16,17 @@
         android:textStyle="normal|bold"
         android:textSize="18sp" />
 
-    <ImageView
+    <TextView
         android:id="@+id/esm_instructions"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="16dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/esm_Imageinstructions"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:layout_alignParentLeft="true"

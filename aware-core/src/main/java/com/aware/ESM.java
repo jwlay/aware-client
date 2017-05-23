@@ -187,7 +187,7 @@ public class ESM extends Aware_Sensor {
 
     /**
      * ESM Dialog with image instructions and free text
-     * Example: [{"esm":{"esm_type":11,"esm_title":"ESM Image","esm_instructions":"image url","esm_submit":"OK","esm_trigger":"AWARE Test"}}]
+     * Example: [{"esm":{"esm_type":11,"esm_title":"ESM Image","esm_instructions":"{\"Text\":\"Please identify the following image\",\"ImageURL\":\"url to image\",\"encodedImage\":\"base 64 encoded image\"}","esm_submit":"OK","esm_trigger":"AWARE Test"}}]
      */
     public static final int TYPE_ESM_IMAGE_FREETEXT = 11;
 
@@ -196,6 +196,12 @@ public class ESM extends Aware_Sensor {
      * Example: [{"esm":{"esm_type":12,"esm_title":"ESM Copy Image","esm_instructions":"image url","esm_submit":"OK","esm_trigger":"AWARE Test"}}]
      */
     public static final int TYPE_ESM_IMAGE_DRAW = 12;
+
+    /**
+     * ESM Notice dialog (no answer possible)
+     * Example: [{"esm":{"esm_type":13,"esm_title":"ESM Notice","esm_instructions":null,"esm_submit":"Ok","esm_trigger":"AWARE Test"}}]
+     */
+    public static final int TYPE_ESM_NOTICE = 13;
 
     /**
      * Required String extra for displaying an ESM. It should contain the JSON string that defines the ESM dialog.

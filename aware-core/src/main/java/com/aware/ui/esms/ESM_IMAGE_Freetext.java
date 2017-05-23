@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import com.aware.Aware;
 import com.aware.ESM;
+import com.aware.R;
 import com.aware.providers.ESM_Provider;
 import com.aware.utils.ESM_ImageUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Jan Wohlfahrt-Laymann on 2017-05-07.
@@ -51,8 +54,17 @@ public class ESM_IMAGE_Freetext extends ESM_Question {
             TextView esm_title = (TextView) ui.findViewById(com.aware.R.id.esm_title);
             esm_title.setText(getTitle());
 
-            ImageView esm_instructions = (ImageView) ui.findViewById(com.aware.R.id.esm_instructions);
-            esm_instructions.setImageBitmap(ESM_ImageUtils.getBitmapFromURL(getInstructions()));
+            ImageView esm_Imageinstructions = (ImageView) ui.findViewById(com.aware.R.id.esm_Imageinstructions);
+            TextView esm_instructions = (TextView) ui.findViewById(R.id.esm_instructions);
+            JSONObject instructions = new JSONObject(getInstructions());
+            String text_instructions = instructions.getString("Text");
+            String url = instructions.getString("ImageUrl");
+            String encodedImage = instructions.getString("encodedImage");
+            if (url != null)
+                esm_Imageinstructions.setImageBitmap(ESM_ImageUtils.getBitmapFromURL(getInstructions()));
+            else if (encodedImage != null)
+                esm_Imageinstructions.setImageBitmap(ESM_ImageUtils.StringToBitMap(getInstructions()));
+            esm_instructions.setText(text_instructions);
 
             final EditText feedback = (EditText) ui.findViewById(com.aware.R.id.esm_feedback);
             feedback.requestFocus();
