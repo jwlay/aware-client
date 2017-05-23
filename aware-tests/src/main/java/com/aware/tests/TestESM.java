@@ -2,15 +2,20 @@ package com.aware.tests;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.aware.Aware;
 import com.aware.ESM;
 import com.aware.ui.esms.ESMFactory;
 import com.aware.ui.esms.ESM_Checkbox;
+import com.aware.ui.esms.ESM_DRAW;
 import com.aware.ui.esms.ESM_DateTime;
 import com.aware.ui.esms.ESM_Freetext;
+import com.aware.ui.esms.ESM_IMAGE_Freetext;
+import com.aware.ui.esms.ESM_Image_Draw;
 import com.aware.ui.esms.ESM_Likert;
+import com.aware.ui.esms.ESM_Notice;
 import com.aware.ui.esms.ESM_Number;
 import com.aware.ui.esms.ESM_PAM;
 import com.aware.ui.esms.ESM_QuickAnswer;
@@ -18,6 +23,7 @@ import com.aware.ui.esms.ESM_Radio;
 import com.aware.ui.esms.ESM_Scale;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by denzil on 04/03/16.
@@ -284,6 +290,44 @@ public class TestESM implements AwareTest {
                     .setSubmitButton("OK")
                     .setTrigger("AWARE Test");
 
+            ESM_DRAW esmDraw = new ESM_DRAW();
+            esmDraw.setTitle("Draw")
+                    .setInstructions("Please draw a circle")
+                    .setSubmitButton("OK")
+                    .setTrigger("AWARE Test");
+
+            // Image Url function requires Thread Policy adjustments for networking
+            if (android.os.Build.VERSION.SDK_INT > 9) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            ESM_IMAGE_Freetext Image_Freetext = new ESM_IMAGE_Freetext();
+            Image_Freetext.setTitle("Image Freetext")
+                    .setInstructions(
+                            (new JSONObject())
+                                    .put("Text","Instruction text")
+                                    .put("ImageUrl","https://i.imgur.com/r31yNMx.jpg")
+                                    .toString())
+                    .setSubmitButton("OK")
+                    .setTrigger("AWARE Test");
+
+            ESM_Image_Draw Image_Draw = new ESM_Image_Draw();
+            Image_Draw.setTitle("Image Draw")
+                    .setInstructions(
+                            (new JSONObject())
+                                    .put("Text","Please copy the Image")
+                                    .put("ImageUrl","https://i.imgur.com/zNZv3sj.png")
+                                    .toString())
+                    .setSubmitButton("OK")
+                    .setTrigger("AWARE Test");
+
+            ESM_Notice esmNotice = new ESM_Notice();
+            esmNotice.setTitle("Notice")
+                    .setInstructions("Test notice")
+                    .setSubmitButton("OK")
+                    .setTrigger("AWARE Test");
+
             factory.addESM(esmFreetext);
             factory.addESM(esmCheckbox);
             factory.addESM(esmLikert);
@@ -292,6 +336,10 @@ public class TestESM implements AwareTest {
             factory.addESM(esmScale);
             factory.addESM(esmPAM);
             factory.addESM(esmDate);
+            factory.addESM(esmDraw);
+            factory.addESM(Image_Freetext);
+            factory.addESM(Image_Draw);
+            factory.addESM(esmNotice);
 
             ESM.queueESM(context, factory.build());
 //            Intent queue = new Intent(ESM.ACTION_AWARE_QUEUE_ESM);

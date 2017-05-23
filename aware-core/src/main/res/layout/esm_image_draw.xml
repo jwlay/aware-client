@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:padding="16dp"
+        android:padding="5dp"
         android:textStyle="normal|bold"
         android:textSize="18sp" />
 
@@ -40,7 +40,7 @@
         android:id="@+id/esm_draw"
         android:layout_width="fill_parent"
         android:layout_height="120pt"
-        android:layout_below="@+id/esm_instructions"
+        android:layout_below="@+id/esm_Imageinstructions"
         android:gravity="top|left"
         android:layout_margin="10pt"
         android:padding="20dp" >
