@@ -18,6 +18,7 @@ import android.util.Log;
 import com.aware.Aware;
 import com.aware.ESM;
 import com.aware.providers.ESM_Provider;
+import com.aware.utils.Aware_TTS;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +45,8 @@ public class ESM_Question extends DialogFragment {
     public static final String esm_flows = "esm_flows";
     public static final String flow_user_answer = "user_answer";
     public static final String flow_next_esm = "next_esm";
+
+    private boolean SpeakInstructions = false;
 
     protected ESM_Question setID(int id) {
         _id = id;
@@ -292,6 +295,24 @@ public class ESM_Question extends DialogFragment {
         return this;
     }
 
+    /**
+     * Set to true to enable Speech-2-Text for Instructions when opening the ESM dialog
+     *
+     * @param speakInstructions
+     */
+    public void setSpeakInstructions(boolean speakInstructions) {
+        SpeakInstructions = speakInstructions;
+    }
+
+    /**
+     * Is speech-2-text for instructions enabled?
+     *
+     * @return
+     */
+    public boolean isSpeakInstructions() {
+        return SpeakInstructions;
+    }
+
     public JSONObject build() throws JSONException {
         JSONObject esm = new JSONObject();
         esm.put("esm", this.esm);
@@ -331,6 +352,12 @@ public class ESM_Question extends DialogFragment {
             if (getExpirationThreshold() > 0) {
                 expire_monitor = new ESMExpireMonitor(System.currentTimeMillis(), getExpirationThreshold(), getID());
                 expire_monitor.execute();
+            }
+            // if enabled speak instructions
+            if (isSpeakInstructions()) {
+                Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
+                speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
+                getActivity().sendBroadcast(speak);
             }
         } catch (JSONException e) {
             e.printStackTrace();
