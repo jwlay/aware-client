@@ -357,6 +357,7 @@ public class ESM_Question extends DialogFragment {
             if (isSpeakInstructions()) {
                 Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
                 speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
+                speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
                 getActivity().sendBroadcast(speak);
             }
         } catch (JSONException e) {
