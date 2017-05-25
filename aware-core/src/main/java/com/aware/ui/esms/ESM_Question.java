@@ -363,15 +363,19 @@ public class ESM_Question extends DialogFragment {
         // if enabled speak instructions
         try {
             if (getSpeakInstructions()) {
-                Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
-                speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
-                speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
-                getActivity().sendBroadcast(speak);
+                sayInstructions();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return esm_dialog;
+    }
+
+    public void sayInstructions() throws JSONException {
+        Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
+        speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
+        speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
+        getActivity().sendBroadcast(speak);
     }
 
     /**

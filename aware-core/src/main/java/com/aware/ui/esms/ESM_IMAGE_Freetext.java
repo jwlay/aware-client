@@ -20,6 +20,7 @@ import com.aware.Aware;
 import com.aware.ESM;
 import com.aware.R;
 import com.aware.providers.ESM_Provider;
+import com.aware.utils.Aware_TTS;
 import com.aware.utils.ESM_ImageUtils;
 
 import org.json.JSONException;
@@ -33,6 +34,15 @@ public class ESM_IMAGE_Freetext extends ESM_Question {
 
     public ESM_IMAGE_Freetext() throws JSONException {
         this.setType(ESM.TYPE_ESM_IMAGE_FREETEXT);
+    }
+
+    @Override
+    public void sayInstructions() throws JSONException {
+        Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
+        JSONObject instructions = new JSONObject(getInstructions());
+        speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, instructions.getString("Text"));
+        speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
+        getActivity().sendBroadcast(speak);
     }
 
     @NonNull
