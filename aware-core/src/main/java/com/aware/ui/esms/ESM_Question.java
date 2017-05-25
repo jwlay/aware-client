@@ -45,8 +45,7 @@ public class ESM_Question extends DialogFragment {
     public static final String esm_flows = "esm_flows";
     public static final String flow_user_answer = "user_answer";
     public static final String flow_next_esm = "next_esm";
-
-    private boolean SpeakInstructions = false;
+    public static final String esm_speak_instructions = "esm_speak_instructions";
 
     protected ESM_Question setID(int id) {
         _id = id;
@@ -300,8 +299,9 @@ public class ESM_Question extends DialogFragment {
      *
      * @param speakInstructions
      */
-    public void setSpeakInstructions(boolean speakInstructions) {
-        SpeakInstructions = speakInstructions;
+    public ESM_Question setSpeakInstructions(boolean speakInstructions) throws JSONException {
+        this.esm.put(esm_speak_instructions,speakInstructions);
+        return this;
     }
 
     /**
@@ -309,8 +309,11 @@ public class ESM_Question extends DialogFragment {
      *
      * @return
      */
-    public boolean isSpeakInstructions() {
-        return SpeakInstructions;
+    public boolean getSpeakInstructions() throws JSONException {
+        if (!this.esm.has(esm_speak_instructions)) {
+            this.esm.put(esm_speak_instructions, false);
+        }
+        return this.esm.getBoolean(esm_speak_instructions);
     }
 
     public JSONObject build() throws JSONException {
@@ -353,8 +356,13 @@ public class ESM_Question extends DialogFragment {
                 expire_monitor = new ESMExpireMonitor(System.currentTimeMillis(), getExpirationThreshold(), getID());
                 expire_monitor.execute();
             }
-            // if enabled speak instructions
-            if (isSpeakInstructions()) {
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // if enabled speak instructions
+        try {
+            if (getSpeakInstructions()) {
                 Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
                 speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
                 speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());

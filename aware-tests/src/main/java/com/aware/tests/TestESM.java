@@ -328,6 +328,14 @@ public class TestESM implements AwareTest {
                     .setSubmitButton("OK")
                     .setTrigger("AWARE Test");
 
+            ESM_Notice esm_tts = new ESM_Notice();
+            esm_tts.setTitle("TTS")
+                    .setInstructions("This is a test of text to speech functionality")
+                    .setSubmitButton("OK")
+                    .setTrigger("AWARE Test")
+                    .setSpeakInstructions(true);
+
+
             factory.addESM(esmFreetext);
             factory.addESM(esmCheckbox);
             factory.addESM(esmLikert);
@@ -340,11 +348,9 @@ public class TestESM implements AwareTest {
             factory.addESM(Image_Freetext);
             factory.addESM(Image_Draw);
             factory.addESM(esmNotice);
+            factory.addESM(esm_tts);
 
             ESM.queueESM(context, factory.build());
-//            Intent queue = new Intent(ESM.ACTION_AWARE_QUEUE_ESM);
-//            queue.putExtra(ESM.EXTRA_ESM, factory.build());
-//            context.sendBroadcast(queue);
 
         } catch (JSONException e) {
             e.printStackTrace();
