@@ -2,6 +2,7 @@ package com.aware.tests;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -13,6 +14,7 @@ import com.aware.ui.esms.ESM_DRAW;
 import com.aware.ui.esms.ESM_DateTime;
 import com.aware.ui.esms.ESM_Freetext;
 import com.aware.ui.esms.ESM_IMAGE_Freetext;
+import com.aware.ui.esms.ESM_ImageManipulation;
 import com.aware.ui.esms.ESM_Image_Draw;
 import com.aware.ui.esms.ESM_Likert;
 import com.aware.ui.esms.ESM_Notice;
@@ -22,6 +24,7 @@ import com.aware.ui.esms.ESM_QuickAnswer;
 import com.aware.ui.esms.ESM_Radio;
 import com.aware.ui.esms.ESM_Scale;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -335,6 +338,34 @@ public class TestESM implements AwareTest {
                     .setTrigger("AWARE Test")
                     .setSpeakInstructions(true);
 
+            ESM_ImageManipulation imageManipulation = new ESM_ImageManipulation();
+            imageManipulation.setTitle("Image Manipulation")
+                    .setInstructions(
+                            (new JSONObject())
+                                    .put("Text","Please place the circles on top of each other")
+                                    .put("Shapes", (new JSONArray())
+                                            .put((new JSONObject())
+                                                    .put("type","Circle")
+                                                    .put("XPos",200)
+                                                    .put("YPos",200)
+                                                    .put("Radius",100)
+                                                    .put("color", Color.RED))
+                                            .put((new JSONObject())
+                                                    .put("type","Circle")
+                                                    .put("XPos",200)
+                                                    .put("YPos",100)
+                                                    .put("Radius",100)
+                                                    .put("color", Color.GREEN))
+                                            .put((new JSONObject())
+                                                    .put("type","Circle")
+                                                    .put("XPos",400)
+                                                    .put("YPos",500)
+                                                    .put("Radius",100)
+                                                    .put("color", Color.BLUE))
+                                    )
+                                    .toString())
+                    .setSubmitButton("OK")
+                    .setTrigger("AWARE Test");
 
             factory.addESM(esmFreetext);
             factory.addESM(esmCheckbox);
@@ -349,6 +380,7 @@ public class TestESM implements AwareTest {
             factory.addESM(Image_Draw);
             factory.addESM(esmNotice);
             factory.addESM(esm_tts);
+            factory.addESM(imageManipulation);
 
             ESM.queueESM(context, factory.build());
 
