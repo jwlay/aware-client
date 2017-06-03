@@ -207,6 +207,10 @@ public class ESM_ImageManipulation extends ESM_Question {
         private HashSet<CircleArea> mCircles = new HashSet<CircleArea>(CIRCLES_LIMIT);
         private SparseArray<CircleArea> mCirclePointer = new SparseArray<CircleArea>(CIRCLES_LIMIT);
 
+        public HashSet<CircleArea> getmCircles() {
+            return mCircles;
+        }
+
         /**
          * Default constructor
          *
