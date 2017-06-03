@@ -176,10 +176,10 @@ public class ESM_ImageManipulation extends ESM_Question {
          * Stores data about single circle
          */
         public static class CircleArea {
-            int radius;
-            int centerX;
-            int centerY;
-            int color;
+            public int radius;
+            public int centerX;
+            public int centerY;
+            public int color;
 
             CircleArea(int centerX, int centerY, int radius, int color) {
                 this.radius = radius;
