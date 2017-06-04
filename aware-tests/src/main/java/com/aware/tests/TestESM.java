@@ -367,7 +367,7 @@ public class TestESM implements AwareTest {
                     .setSubmitButton("OK")
                     .setTrigger("AWARE Test");
 
-            factory.addESM(esmFreetext);
+            /*factory.addESM(esmFreetext);
             factory.addESM(esmCheckbox);
             factory.addESM(esmLikert);
             factory.addESM(esmQuickAnswer);
@@ -378,9 +378,9 @@ public class TestESM implements AwareTest {
             factory.addESM(esmDraw);
             factory.addESM(Image_Freetext);
             factory.addESM(Image_Draw);
-            factory.addESM(esmNotice);
+            factory.addESM(esmNotice);*/
             factory.addESM(esm_tts);
-            factory.addESM(imageManipulation);
+           // factory.addESM(imageManipulation);
 
             ESM.queueESM(context, factory.build());
 

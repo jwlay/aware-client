@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -375,6 +376,7 @@ public class ESM_Question extends DialogFragment {
         Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
         speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
         speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
+        speak.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         getActivity().sendBroadcast(speak);
     }
 

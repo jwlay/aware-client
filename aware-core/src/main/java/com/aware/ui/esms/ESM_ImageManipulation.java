@@ -165,9 +165,9 @@ public class ESM_ImageManipulation extends ESM_Question {
 
         public void addShape(JSONObject shape) throws JSONException {
             String shape_type = shape.getString("type");
-            int shape_x = shape.getInt("XPos");
-            int shape_y = shape.getInt("YPos");
-            int shape_radius = shape.getInt("Radius");
+            int shape_x = shape.getInt("xPos");
+            int shape_y = shape.getInt("yPos");
+            int shape_radius = shape.getInt("radius");
             int shape_color = shape.getInt("color");
             initialShapes.add(new CanvasView.CircleArea(shape_x,shape_y,shape_radius,shape_color));
         }
