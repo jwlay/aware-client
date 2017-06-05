@@ -53,6 +53,27 @@ public class ESM_ImageManipulation extends ESM_Question {
     }
 
     @Override
+    protected ESM_Question setID(int id) {
+        if (!this.getClass().equals(ESM_ImageManipulation.class)) {
+            try {
+                Class<?> c = Class.forName(getESM_Class());
+                ESM_ImageManipulation subclass = (ESM_ImageManipulation) c.newInstance();
+                subclass.rebuild(this.esm).setID(id);
+                return subclass;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return super.setID(id);
+    }
+
+    @Override
     public void sayInstructions() throws JSONException {
         Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
         JSONObject instructions = new JSONObject(getInstructions());

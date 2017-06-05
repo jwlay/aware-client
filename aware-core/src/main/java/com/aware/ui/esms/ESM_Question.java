@@ -47,6 +47,7 @@ public class ESM_Question extends DialogFragment {
     public static final String flow_user_answer = "user_answer";
     public static final String flow_next_esm = "next_esm";
     public static final String esm_speak_instructions = "esm_speak_instructions";
+    public static final String esm_class = "esm_class";
 
     protected ESM_Question setID(int id) {
         _id = id;
@@ -302,6 +303,18 @@ public class ESM_Question extends DialogFragment {
      */
     public ESM_Question setSpeakInstructions(boolean speakInstructions) throws JSONException {
         this.esm.put(esm_speak_instructions,speakInstructions);
+        return this;
+    }
+
+    public String getESM_Class() throws JSONException {
+        if (!this.esm.has(esm_class)) {
+            this.esm.put(esm_class,"");
+        }
+        return this.esm.getString(esm_class);
+    }
+
+    public ESM_Question setESM_Class(String _class) throws JSONException {
+        this.esm.put(esm_class, _class);
         return this;
     }
 
