@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,9 +68,13 @@ public class ESM_Image_Draw extends ESM_Question {
             TextView esm_instructions = (TextView) ui.findViewById(R.id.esm_instructions);
             JSONObject instructions = new JSONObject(getInstructions());
 
-            if (instructions.has("ImageUrl"))
+            if (instructions.has("ImageUrl")) {
+                if (android.os.Build.VERSION.SDK_INT > 9) {
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
                 esm_Imageinstructions.setImageBitmap(ESM_ImageUtils.getBitmapFromURL(instructions.getString("ImageUrl")));
-            else if (instructions.has("encodedImage"))
+            } else if (instructions.has("encodedImage"))
                 esm_Imageinstructions.setImageBitmap(ESM_ImageUtils.StringToBitMap(instructions.getString("encodedImage")));
             esm_instructions.setText(instructions.getString("Text"));
 

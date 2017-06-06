@@ -303,11 +303,6 @@ public class TestESM implements AwareTest {
                     .setSubmitButton("OK")
                     .setTrigger("AWARE Test");
 
-            // Image Url function requires Thread Policy adjustments for networking
-            if (android.os.Build.VERSION.SDK_INT > 9) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-            }
 
             ESM_IMAGE_Freetext Image_Freetext = new ESM_IMAGE_Freetext();
             Image_Freetext.setTitle("Image Freetext")
