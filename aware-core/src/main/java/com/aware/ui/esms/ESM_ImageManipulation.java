@@ -121,9 +121,14 @@ public class ESM_ImageManipulation extends ESM_Question {
             esm_dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
             JSONArray shapes = jsonInstruction.getJSONArray("Shapes");
-            for (int i = 0; i < shapes.length(); i++) {
-                feedback.addShape(shapes.getJSONObject(i));
+            try {
+                for (int i = 0; i < shapes.length(); i++) {
+                    feedback.addShape(shapes.getJSONObject(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
 
             Button cancel_text = (Button) ui.findViewById(R.id.esm_cancel);
             cancel_text.setOnClickListener(new View.OnClickListener() {
