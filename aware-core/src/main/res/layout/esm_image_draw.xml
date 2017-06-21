@@ -28,18 +28,18 @@
     <ImageView
         android:id="@+id/esm_Imageinstructions"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
-        android:padding="16dp"
+        android:padding="2dp"
         android:layout_weight="1" />
 
 
     <view class="com.aware.ui.esms.ESM_DRAW$CanvasView"
         android:id="@+id/esm_draw"
         android:layout_width="fill_parent"
-        android:layout_height="120pt"
+        android:layout_height="100pt"
         android:layout_below="@+id/esm_Imageinstructions"
         android:gravity="top|left"
         android:layout_margin="10pt"
