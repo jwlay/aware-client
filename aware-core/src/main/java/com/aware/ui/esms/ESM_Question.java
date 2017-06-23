@@ -389,7 +389,7 @@ public class ESM_Question extends DialogFragment {
         Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
         speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
         speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
-        speak.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        speak.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         getActivity().sendBroadcast(speak);
     }
 
