@@ -54,7 +54,7 @@ public class ESM_ImageManipulation extends ESM_Question {
 
     @Override
     protected ESM_Question setID(int id) {
-        if (!this.getClass().equals(ESM_ImageManipulation.class)) {
+        if (this.getClass().equals(ESM_ImageManipulation.class)) {
             try {
                 Class<?> c = Class.forName(getESM_Class());
                 ESM_ImageManipulation subclass = (ESM_ImageManipulation) c.newInstance();
