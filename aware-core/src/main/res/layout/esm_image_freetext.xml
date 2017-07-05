@@ -28,7 +28,7 @@
     <ImageView
         android:id="@+id/esm_Imageinstructions"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="20dp"

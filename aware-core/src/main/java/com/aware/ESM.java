@@ -204,12 +204,6 @@ public class ESM extends Aware_Sensor {
     public static final int TYPE_ESM_NOTICE = 13;
 
     /**
-     * ESM Image manipulation for draging and dropping figures around a canvas
-     * Example: [{"esm":{"esm_type":14,"esm_title":"ESM Image Manipulation","esm_instructions":base64 encoded image,"esm_submit":"Ok","esm_trigger":"AWARE Test"}}]
-     */
-    public static final int TYPE_ESM_IMAGE_MANIPULATION = 14;
-
-    /**
      * Required String extra for displaying an ESM. It should contain the JSON string that defines the ESM dialog.
      * Examples:<p>
      * Free text: [{'esm':{'esm_type':1,'esm_title':'ESM Freetext','esm_instructions':'The user can answer an open ended question.','esm_submit':'Next','esm_expiration_threshold':20,'esm_trigger':'esm trigger example'}}]
