@@ -377,7 +377,7 @@ public class ESM_Question extends DialogFragment {
         // if enabled speak instructions
         try {
             if (getSpeakInstructions()) {
-                sayInstructions();
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -386,11 +386,19 @@ public class ESM_Question extends DialogFragment {
     }
 
     public void sayInstructions() throws JSONException {
-        Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
-        speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, getInstructions());
-        speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
-        speak.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        getActivity().sendBroadcast(speak);
+        InstructionSpeaker instructionSpeaker =  new InstructionSpeaker();
+        instructionSpeaker.execute(getInstructions());
+    }
+
+    private class InstructionSpeaker extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... instructions) {
+            Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
+            speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, instructions[0]);
+            speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
+            getActivity().sendBroadcast(speak);
+            return null;
+        }
     }
 
     /**

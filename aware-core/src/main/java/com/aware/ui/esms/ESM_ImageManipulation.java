@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -73,13 +74,27 @@ public class ESM_ImageManipulation extends ESM_Question {
         return super.setID(id);
     }
 
+    public class ImageInstructionSpeaker extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... inst) {
+            Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
+            try {
+                JSONObject instructions = new JSONObject(inst[0]);
+                speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, instructions.getString("Text"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
+            getActivity().sendBroadcast(speak);
+            return null;
+        }
+    }
+
     @Override
     public void sayInstructions() throws JSONException {
-        Intent speak = new Intent(Aware_TTS.ACTION_AWARE_TTS_SPEAK);
-        JSONObject instructions = new JSONObject(getInstructions());
-        speak.putExtra(Aware_TTS.EXTRA_TTS_TEXT, instructions.getString("Text"));
-        speak.putExtra(Aware_TTS.EXTRA_TTS_REQUESTER, getContext().getApplicationContext().getPackageName());
-        getActivity().sendBroadcast(speak);
+        ImageInstructionSpeaker imageInstructionSpeaker = new ImageInstructionSpeaker();
+        imageInstructionSpeaker.execute(getInstructions());
     }
 
     @NonNull
