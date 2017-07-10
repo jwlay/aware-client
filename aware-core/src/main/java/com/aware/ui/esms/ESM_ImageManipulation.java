@@ -94,7 +94,7 @@ public class ESM_ImageManipulation extends ESM_Question {
     @Override
     public void sayInstructions() throws JSONException {
         ImageInstructionSpeaker imageInstructionSpeaker = new ImageInstructionSpeaker();
-        imageInstructionSpeaker.execute(getInstructions());
+        imageInstructionSpeaker.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, getInstructions());
     }
 
     @NonNull

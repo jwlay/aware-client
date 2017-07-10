@@ -377,7 +377,7 @@ public class ESM_Question extends DialogFragment {
         // if enabled speak instructions
         try {
             if (getSpeakInstructions()) {
-
+                sayInstructions();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -387,7 +387,7 @@ public class ESM_Question extends DialogFragment {
 
     public void sayInstructions() throws JSONException {
         InstructionSpeaker instructionSpeaker =  new InstructionSpeaker();
-        instructionSpeaker.execute(getInstructions());
+        instructionSpeaker.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, getInstructions());
     }
 
     private class InstructionSpeaker extends AsyncTask<String, Void, Void> {
