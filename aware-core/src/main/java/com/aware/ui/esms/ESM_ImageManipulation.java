@@ -190,7 +190,7 @@ public class ESM_ImageManipulation extends ESM_Question {
 
     public JSONObject createJsonOutput(CanvasView feedback) throws JSONException {
         JSONObject response = new JSONObject();
-        response.put("Image",ESM_ImageUtils.bitmapToString(feedback.getDrawing()));
+        response.put("Image",ESM_ImageUtils.bitmapToString(feedback.getDrawing()).replaceAll("\/","/").replaceAll("\n",""));
         return response;
     }
 
