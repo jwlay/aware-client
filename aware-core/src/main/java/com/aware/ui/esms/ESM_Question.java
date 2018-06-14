@@ -47,6 +47,7 @@ public class ESM_Question extends DialogFragment {
     public static final String flow_user_answer = "user_answer";
     public static final String flow_next_esm = "next_esm";
     public static final String esm_speak_instructions = "esm_speak_instructions";
+    public static final String esm_solution = "esm_solution";
     public static final String esm_class = "esm_class";
 
     protected ESM_Question setID(int id) {
@@ -294,6 +295,26 @@ public class ESM_Question extends DialogFragment {
         }
         this.setFlows(new_flows);
         return this;
+    }
+
+    /**
+     * Set to the correct solution of the ESM dialog for evaluation
+     *
+     * @param solution
+     */
+    public ESM_Question setSolution(String solution) throws JSONException {
+        this.esm.put(esm_solution,solution);
+        return this;
+    }
+
+    /**
+     * Returns the correct solution for the ESM
+     */
+    public String getSolution() throws JSONException {
+        if (!this.esm.has(esm_solution)) {
+            this.esm.put(esm_solution,"");
+        }
+        return this.esm.getString(esm_solution);
     }
 
     /**
